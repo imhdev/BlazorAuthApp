@@ -1,0 +1,44 @@
+﻿{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.6",
+  "version": "1.0.0",
+  "showLoadingIndicator": false,
+  "id": "03dbde80-d318-4abe-a54f-d5d52967a061",
+  "packageName": "com.custom.tab",
+  "developer": {
+    "name": "Contoso",
+    "websiteUrl": "https://5d0e86629493.ngrok.io",
+    "privacyUrl": "https://5d0e86629493.ngrok.io/privacy",
+    "termsOfUseUrl": "https://5d0e86629493.ngrok.io/tou"
+  },
+  "name": {
+    "short": "Interop Blazor",
+    "full": "ChannelGroupTab"
+  },
+  "description": {
+    "short": "short description here",
+    "full": "full description here"
+  },
+  "accentColor": "#D85028",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://5d0e86629493.ngrok.io/content",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "team",
+        "groupchat"
+      ]
+    }
+  ],
+  "icons": {
+    "outline": "icon-outline.png",
+    "color": "icon-color.png"
+  },
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "5d0e86629493.ngrok.io"
+  ]
+}
