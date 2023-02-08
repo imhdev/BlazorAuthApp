@@ -1,0 +1,42 @@
+﻿@page "/gray"
+@inject NavigationManager NavigationManager
+
+@layout MainLayout
+@*<h1>Custom tab configuration Success!<br /><br /></h1>*@
+
+<p>This is your Customised channel/ group tab!</p>
+
+<h1>Recent messages in my mailbox</h1>
+
+<button class="btn btn-primary" @onclick="GetMessages">Display Messages</button>
+
+<h1>@AccessToken</h1>
+
+
+@code{
+    protected string AccessToken = null;
+
+    protected void GetMessages()
+    {
+        NavigationManager.NavigateTo("auth.start.html");
+        // this.SignInProcess();
+    }
+
+    private void SignInProcess()
+    {
+        if (string.IsNullOrEmpty(this.AccessToken))
+        {
+            _ = this.GetAccessToken(true);
+        }
+    }
+
+    private string GetAccessToken(bool promptConsent = false)
+    {
+        if (promptConsent)
+        {
+            AccessToken = "test token";
+            NavigationManager.NavigateTo("auth.start.html");
+        }
+        return "temp token";
+    }
+}

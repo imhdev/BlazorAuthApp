@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Blazor Custom Tab</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js"></script>
+</head>
+<body>
+    <script>
+        //initialize microsoftTeams in _Layout page
+        microsoftTeams.initialize();
+
+        microsoftTeams.getContext(function (msTeamsContext) {
+            document.getElementById("demo").innerHTML = msTeamsContext.userProfileName;
+        });
+
+        function saveGray() {
+            microsoftTeams.settings.registerOnSaveHandler(function (saveEvent) {
+                microsoftTeams.settings.setSettings({
+                    websiteUrl: `https://5d0e86629493.ngrok.io`,
+                    contentUrl: `https://5d0e86629493.ngrok.io/auth.html`,
+                    entityId: "grayIconTab",
+                    suggestedDisplayName: "MyInteropTab"
+                });
+                saveEvent.notifySuccess();
+            });
+            $(".disappear").remove();
+        }
+
+        function colorClickGray() {
+            document.getElementById("demo").innerHTML = "Custom tab configuration in process..";
+            microsoftTeams.settings.setValidityState(true);
+            $(".disappear").remove();
+            saveGray()
+        }
+    </script>
+
+    <p>
+        <h2 class="disappear" style="color:#6364a5">Configure your tab</h2>
+
+    <p id="demo"></p>
+
+    <p>
+        <button class="disappear" onclick="colorClickGray()">Click Me</button>
+    </p>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Silent Authentication Sample Login</title>
+</head>
+<body>
+    <script src="https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js" ></script>
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.15/js/adal.min.js"></script>
+
+    <script type="text/javascript">
+        microsoftTeams.initialize();
+        // ADAL.js configuration
+        let config = {
+
+            clientId: "cec00a94-4d65-4c4e-bd3f-91b35bd46409",
+            redirectUri: window.location.origin + "/auth-end.html",       // This should be in the list of redirect uris for the AAD app
+            cacheLocation: "localStorage",
+            navigateToLoginRequestUrl: false,
+        };
+
+        let authContext = new AuthenticationContext(config);
+
+        if (authContext.isCallback(window.location.hash)) {
+            authContext.handleWindowCallback(window.location.hash);
+            // Only call notifySuccess or notifyFailure if this page is in the authentication popup (not iframed)
+            if (window.parent === window) {
+                if (authContext.getCachedUser()) {
+                    microsoftTeams.authentication.notifySuccess();
+                } else {
+                    microsoftTeams.authentication.notifyFailure(authContext.getLoginError());
+                }
+            }
+        }
+    </script>
+</body>
+</html>

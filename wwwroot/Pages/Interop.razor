@@ -1,0 +1,60 @@
+﻿@page "/interop"
+@inject IJSRuntime JsRuntime
+
+<h3> JS Interop</h3>
+
+<button class="btn btn-primary" @onclick="ShowAlert">Call JS</button>
+<br />
+<h3>Ask Question</h3>
+
+<input @bind="@questionText" />
+
+<button class="btn btn-warning" @onclick="AskQuestion">Ask Question</button>
+
+<div>
+    The answer is : <span id="spanResponse"></span>
+</div>
+
+<div>
+    <h3>Focus on element</h3>
+    <input @ref ="InputforFocus"/>
+    <button class="btn btn-dark" @onclick="Focus">Focus!</button>
+    <br /><br />
+
+    <h3>Teams element</h3>
+    <input id="inputforTeams" />
+    <button class="btn btn-danger" @onclick="FocusTeams">Focus Team!</button>
+    <p id="demo"></p>
+</div>
+
+@code {
+
+    string questionText = string.Empty;
+
+    ElementReference InputforFocus;
+
+    async Task FocusTeams()
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "test", "inputforTeams", "demo");
+    }
+
+    async Task Focus()
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "focusOnElement", args: InputforFocus);
+    }
+
+
+    async Task AskQuestion()
+    {
+        var response = await JsRuntime.InvokeAsync<string>(identifier: "createPrompt",
+                        questionText);
+
+        await JsRuntime.InvokeVoidAsync(identifier: "setElementById", "spanResponse", response);
+    }
+
+
+    async Task ShowAlert()
+    {
+        await JsRuntime.InvokeVoidAsync(identifier: "createAlert");
+    }
+}

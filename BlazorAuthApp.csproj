@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PostBuildEvent>powershell.exe Compress-Archive -Path \"$(ProjectDir)AppManifest\*\" -DestinationPath \"$(TargetDir)Tab.zip\" -Force</PostBuildEvent>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\auth-end.html" />
+    <None Include="wwwroot\auth-start.html" />
+    <None Include="wwwroot\myPages\steps.html" />
+    <None Include="wwwroot\myPages\tab.html" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Graph" Version="3.6.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="AppManifest\icon-color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AppManifest\icon-outline.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,47 @@
+﻿@page "/content"
+@inject IJSRuntime JsRuntime
+@using BlazorAuthApp.Data
+@inject NavigationManager navigationManager
+
+
+<h3 style="font-display:fallback; color:cornflowerblue">Content Page</h3>
+
+<br />
+<h4>Teams element</h4>
+
+<button class="btn btn-primary" @onclick="FocusTeams">Login</button>
+
+<p id="demo"></p>
+
+<p id="paratxt">@Status</p>
+@*c:\GitRepos\BlazorAuthApp\BlazorAuthApp>ngrok http https://localhost:44350 -host-header="localhost:44350"*@
+
+@code {
+
+    private GraphClientState State;
+
+    private string Status;
+    private string Data = null;
+
+    async Task FocusTeams()
+    {
+        try
+        {
+            this.State = new GraphClientState();
+            if (this.State.AccessToken == null)
+            {
+                await Task.Delay(1);
+                // var data = await JsRuntime.InvokeAsync<object>(identifier: "prmoiseFunction");
+                var data = await JsRuntime.InvokeAsync<object>(identifier: "window.getAccessToken");
+                // Data = data.ToString();
+                await JsRuntime.InvokeVoidAsync("openDoc");
+            }
+
+            this.Status = "Success !!!";
+        }
+        catch (JSException e)
+        {
+            _ = e.Message;
+        }
+    }
+}
